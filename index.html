@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A browser-based challenge that teaches classic ciphers, hashing and modern encryption one puzzle at a time.">
+  <title>Crypto Climb</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Order matters: each file only depends on the ones listed above it. -->
+  <script src="js/utils.js" defer></script>
+  <script src="js/ciphers.js" defer></script>
+  <script src="js/words.js" defer></script>
+  <script src="js/stages.js" defer></script>
+  <script src="js/challenges.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="hero">
+      <p class="hero__kicker">Crypto Climb · about 45–60 minutes</p>
+      <h1 class="hero__title">Start simple. Get cryptographic.</h1>
+      <p class="hero__lead">
+        Short puzzles that ramp up gradually. You begin with a Caesar cipher where the shift is
+        handed to you, then move through Atbash, Vigenère, XOR, hidden keys, hashing and finally
+        AES-GCM. Whenever a shift or key is meant to be known, it is shown on screen. It is only
+        withheld on the puzzles that ask you to recover it.
+      </p>
+    </header>
+
+    <section class="card" aria-label="Progress">
+      <div class="card__row">
+        <ul class="stats">
+          <li class="pill">Level <strong id="level-number">1</strong>/<span id="level-total">–</span></li>
+          <li class="pill">Attempts <strong id="attempt-count">0</strong></li>
+          <li class="pill">Time <strong id="elapsed">00:00</strong></li>
+        </ul>
+        <button type="button" class="btn btn--secondary" id="restart-top">Restart</button>
+      </div>
+      <div class="progress" id="progress" role="progressbar" aria-label="Challenge progress"
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress__bar" id="progress-bar"></div>
+      </div>
+      <p class="muted muted--small" id="status" role="status">Getting fresh challenge material…</p>
+    </section>
+
+    <main id="game">
+      <section class="card" aria-labelledby="level-title">
+        <p class="level-tag" id="level-tag"></p>
+        <h2 class="card__title" id="level-title"></h2>
+
+        <div class="callout">
+          <strong>What you need to know</strong>
+          <p id="level-explain"></p>
+        </div>
+
+        <h3>Examples</h3>
+        <pre class="code-block" id="level-examples"></pre>
+
+        <h3>Your task</h3>
+        <p id="level-task"></p>
+        <pre class="code-block" id="level-data"></pre>
+        <p class="muted" id="level-note" hidden>
+          <span id="level-note-label"></span>
+          <strong id="level-note-value"></strong>
+        </p>
+
+        <form id="answer-form" novalidate>
+          <label class="field__label" for="answer">Your answer</label>
+          <input class="field__input" id="answer" name="answer" type="text"
+                 autocomplete="off" autocapitalize="off" spellcheck="false"
+                 placeholder="Enter your answer">
+          <div class="actions">
+            <button type="submit" class="btn" id="submit">Submit attempt</button>
+          </div>
+        </form>
+
+        <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+
+        <details id="level-hint-details">
+          <summary>Need a hint?</summary>
+          <p class="muted" id="level-hint"></p>
+        </details>
+      </section>
+    </main>
+
+    <section class="card" id="results" aria-labelledby="results-title" hidden>
+      <h2 class="card__title" id="results-title" tabindex="-1">Challenge complete 🎉</h2>
+      <p id="results-summary"></p>
+      <table class="results-table">
+        <caption class="visually-hidden">Attempts taken on each level</caption>
+        <thead>
+          <tr>
+            <th scope="col">Level</th>
+            <th scope="col">Challenge</th>
+            <th scope="col">Attempts</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+      <div class="actions">
+        <button type="button" class="btn" id="restart-results">Try again</button>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="about-title">
+      <h2 class="card__title" id="about-title">How generation works</h2>
+      <p class="callout callout--plain">
+        Each puzzle fetches fresh English words from a public random-word API and then performs the
+        cipher operation in your browser. Your submitted answers are never sent to that API. If the
+        API is unavailable, a built-in word list is used instead.
+      </p>
+      <p class="muted muted--small">
+        Attempts live only in this page's JavaScript memory. There is no database, account,
+        analytics, or score server.
+      </p>
+    </section>
+
+  </div>
+</body>
+</html>
